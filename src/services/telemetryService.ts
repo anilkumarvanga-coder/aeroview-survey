@@ -1,0 +1,4 @@
+import {Project} from '../models';
+import {Telemetry,simulationConfig} from '../data/telemetry';
+import {mapService} from './mapService';
+export const telemetryService={config:simulationConfig,sample:(p:Project,tick:number):Telemetry=>{const progress=Math.min(1,tick/simulationConfig.duration);const route=mapService.route();const segment=progress*(route.length-1);const start=route[Math.floor(segment)];const end=route[Math.min(route.length-1,Math.floor(segment)+1)];const x=start.x+(end.x-start.x)*(segment%1);const y=start.y+(end.y-start.y)*(segment%1);const geo={lat:p.lat+(215-y)*.000025,lng:p.lng+(x-425)*.000025};return {tick,latitude:geo.lat,longitude:geo.lng,altitude:84+Math.sin(tick/6)*3,speed:tick>=simulationConfig.duration?0:12.4+Math.cos(tick/5)*.7,heading:(142+tick*3)%360,battery:Math.max(32,92-tick/4),timestamp:new Date().toISOString(),progress,panels:Math.round(progress*2500),findings:Math.floor(progress*34)}}};

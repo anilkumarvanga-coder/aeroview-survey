@@ -1,0 +1,1 @@
+export const clients=[{id:'CLIENT-001',name:'ABC Solar Pvt Ltd',contact:'client@demo.com'},{id:'CLIENT-002',name:'XYZ Renewable Energy',contact:'operations@xyz.demo'},{id:'CLIENT-003',name:'Green Power Corporation',contact:'survey@greenpower.demo'}];

@@ -1,0 +1,2 @@
+import {Project} from '../models';
+export const mapService={blocks:(p:Project)=>Array.from({length:6},(_,i)=>({id:String.fromCharCode(65+i),x:135+(i%3)*205,y:95+Math.floor(i/3)*150,panels:Math.floor(p.panels/6)+(i===5?p.panels%6:0),lat:p.lat+i*.001,lng:p.lng+i*.001})),route:(offset=0)=>Array.from({length:12},(_,i)=>({x:155+(i%2===0?0:520),y:100+Math.floor(i/2)*49+offset})),location:(p:Project,t:number)=>({lat:p.lat+Math.sin(t/10)*.002,lng:p.lng+Math.cos(t/10)*.004})};

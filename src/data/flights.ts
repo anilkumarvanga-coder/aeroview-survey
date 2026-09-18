@@ -1,0 +1,2 @@
+import {Flight} from '../models';
+export function makeFlight(projectId:string,index:number):Flight{return {id:`FLT-${projectId}-${String(24-index).padStart(3,'0')}`,projectId,date:['2026-09-18','2026-09-15','2026-09-10','2026-09-05','2026-08-28','2026-08-20','2026-08-15','2026-08-09'][index],status:'Completed',distance:18.4-index*.7,duration:42-index*2,panels:2840-index*130,findings:34+index*4,battery:38-index,droneId:`AV-0${index%5+1}`}}

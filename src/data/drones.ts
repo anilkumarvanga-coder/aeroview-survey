@@ -1,0 +1,1 @@
+export const drones=Array.from({length:5},(_,i)=>({id:`AV-0${i+1}`,name:['DJI Matrice 350 RTK','DJI Mavic 3 Thermal','DJI Matrice 30T','DJI Mavic 3 Enterprise','DJI Matrice 300 RTK'][i],status:i===0?'Flying':i===4?'Maintenance':'Ready',battery:[72,96,88,100,45][i],projectId:`SOL-00${i%4+1}`,sensor:i%2?'RGB + RTK':'RGB + Thermal'}));

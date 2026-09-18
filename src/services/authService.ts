@@ -1,0 +1,2 @@
+import {users} from '../data/users';
+export const authService={login:(email:string,password:string,mode:string)=>{const u=users.find(u=>u.email===email.toLowerCase()||(u.loginType==='client'&&u.projectIds.includes(email.toUpperCase())));if(password!=='demo123'||!u||u.loginType!==mode)throw Error('Use the credentials for the selected login type. Demo password: demo123.');return u;},demoUsers:()=>users.slice(0,6),list:()=>users};

@@ -1,0 +1,5 @@
+import {Query,User} from '../models';
+import {projectService} from './projectService';
+import {paginate} from './query';
+const overrides=new Map<string,string>();
+export const findingService={async list(u:User,projectId:string|undefined,q:Query={}){const {makeFinding}=await import('../data/findings');const ps=projectService.list(u).filter(p=>p.projectType==='solar'&&(!projectId||p.id===projectId));const records=ps.flatMap(p=>Array.from({length:p.id==='SOL-001'?147:60},(_,i)=>{const f=makeFinding(p.id,i);return {...f,status:overrides.get(p.id+f.id)??(p.status==='Completed'?'Resolved':f.status)}})).filter(f=>(!q.search||(f.id+f.type+f.assetId).toLowerCase().includes(q.search.toLowerCase()))&&(!q.filter||q.filter==='All severities'||f.severity===q.filter));return paginate(records,q)},update(u:User,projectId:string,id:string,status:string){if(u.loginType!=='firm'||!projectService.get(u,projectId))throw Error('Finding updates are available to assigned firm users.');if(!['Open','In review','Resolved'].includes(status))throw Error('Invalid status');overrides.set(projectId+id,status)}};
