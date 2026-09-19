@@ -1,0 +1,4 @@
+import {Footage} from '../models';
+export function makeFootage(projectId:string,index:number):Footage {
+  return {id:`VID-${projectId}-${String(index+1).padStart(3,'0')}`,projectId,title:['Block C · Thermal inspection','Block A · Panel survey','Block B · Electrical inspection','Block D · Follow-up inspection','Block E · Site overview','Block F · Structure inspection'][index],block:`Block ${['C','A','B','D','E','F'][index]}`,date:['2026-09-18','2026-09-18','2026-09-15','2026-09-15','2026-09-10','2026-09-10'][index],time:['10:24','09:10','11:35','14:20','08:45','10:05'][index],flightId:`FLT-${projectId}-${String([24,24,23,23,22,22][index]).padStart(3,'0')}`,drone:'DJI Matrice 350 RTK · AV-01',duration:'00:12',source:'/media/solar-demo.mp4',poster:'/inspection-demo.png',label:'Synthetic image loop · 12-second demo clip'};
+}

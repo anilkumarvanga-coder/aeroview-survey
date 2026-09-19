@@ -25,7 +25,12 @@ All project operations pass through access-scoped services. UI permissions are d
 `/login`, `/dashboard`, `/projects`, `/projects/:id/:view`, and operational views `/flights`, `/assets`, `/findings`, `/analytics`, `/reports`, `/clients`, `/drones`, `/users`. The shared shell keeps project context without duplicating client and firm pages. Unauthorized project IDs and views are rejected. Browser back/forward is supported; refresh asks for a demo login again.
 
 ## Local checks
-Use the selected package manager (pnpm). `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build`. The deployment uses the Sites Vinext/Cloudflare runtime.
+Use the selected package manager (pnpm). `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build`. This export uses the official Next.js runtime for Vercel. Run `pnpm dev` locally. Vercel: Framework Next.js, build `pnpm build`, output `.next`. The Vercel configuration is included.
 
 ## Deliberate demo limitations
 Maps are interactive geographic site schematics, not satellite tiles. Photos are synthetic examples and not asset-specific evidence. Reports export TXT and CSV. Firm users can simulate project status changes and finding review/resolution. Non-solar modules are placeholders. Comparison rows are illustrative demo changes. Browser WebMCP integration is feature-detected; unavailable browsers retain the complete visible UI.
+
+## Observation and video workflows
+The Observations page has a paginated list and an image review view, scoped search, category/block/severity/risk/status/date filters, sorting, and filtered CSV export. Review details include synthetic evidence with an optional demonstration annotation, zoom, image download, coordinates, flight/asset references, recommendation, assignee, remarks, risk and status. Assigned firm users can save reviews and bulk status updates; client users are read-only. Changes and audit events persist in memory for the current page session only.
+
+Live Streaming now uses a simple HTML video player. Recorded Footage is a separate searchable, block/date-filtered library. The previous moving-map telemetry experience is retained as Flight Simulator. Media uses no autoplay and no initial video download (`preload="none"`). The bundled 12-second MP4 is explicitly a synthetic still-image loop, not actual drone footage or a live connection. Each recording metadata entry shares this clip. Local MP4/WebM previews use object URLs and are not uploaded or persisted; URLs are revoked when replaced or unmounted.

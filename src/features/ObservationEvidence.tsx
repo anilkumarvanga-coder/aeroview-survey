@@ -1,0 +1,12 @@
+'use client';
+import {useState} from 'react';
+import Image from 'next/image';
+import {Download,Expand,Minus,Plus} from 'lucide-react';
+import {Switch} from '@/components/ui/switch';
+import {Dialog,DialogContent,DialogTitle,DialogDescription} from '@/components/ui/dialog';
+import {Finding} from '../models';
+export default function ObservationEvidence({finding:f}:{finding:Finding}) {
+  const [marked,setMarked]=useState(true),[zoom,setZoom]=useState(1),[expanded,setExpanded]=useState(false);
+  const picture=<div className="observation-photo"><div className="photo-stage" style={{transform:`scale(${zoom})`}}><Image unoptimized src={f.image} alt={`Illustrative RGB and thermal solar inspection image for ${f.type}; not actual asset evidence`} width={1536} height={1024}/>{marked&&<div className="evidence-marker"><span>{f.type} · Demo annotation</span></div>}</div><span className="evidence-disclaimer">SYNTHETIC DEMO IMAGE</span></div>;
+  return <section className="section-card observation-evidence"><div className="card-heading"><div><h2>Inspection evidence</h2><p>{f.flightId} · RGB / thermal sample</p></div><button className="soft-button" onClick={()=>setExpanded(true)} aria-label="Expand inspection image"><Expand size={16}/></button></div>{picture}<div className="evidence-controls"><label><Switch checked={marked} onCheckedChange={setMarked} aria-label="Show observation annotation"/>Marked image</label><div className="row"><button className="soft-button" disabled={zoom<=1} onClick={()=>setZoom(z=>Math.max(1,z-.25))} aria-label="Zoom out evidence"><Minus size={15}/></button><span>{Math.round(zoom*100)}%</span><button className="soft-button" disabled={zoom>=2} onClick={()=>setZoom(z=>Math.min(2,z+.25))} aria-label="Zoom in evidence"><Plus size={15}/></button><a className="soft-button" href={f.image} download={`${f.id}-illustrative-evidence.png`}><Download size={15}/>Image</a></div></div><p className="evidence-note">One shared synthetic image is used for demo observations. The annotation demonstrates the review interface; it is not a confirmed detection.</p><div className="evidence-location"><span>{f.latitude.toFixed(6)}° N, {f.longitude.toFixed(6)}° E</span><span>Mock location · {f.block} / Row {f.row}</span></div><Dialog open={expanded} onOpenChange={setExpanded}><DialogContent className="evidence-expanded"><DialogTitle>{f.id} · {f.type}</DialogTitle><DialogDescription>Synthetic example image with a demonstration annotation.</DialogDescription>{picture}</DialogContent></Dialog></section>;
+}
