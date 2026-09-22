@@ -1,0 +1,23 @@
+services:
+  api:
+    build: .
+    ports: ["127.0.0.1:8000:8000"]
+    environment:
+      AEROVIEW_API_KEY: ${AEROVIEW_API_KEY:?Set a random API key of at least 32 characters}
+      AEROVIEW_DATA: /data
+    volumes: ["survey-data:/data"]
+    restart: unless-stopped
+    mem_limit: 1g
+  worker:
+    build: .
+    command: ["python", "-m", "app.worker"]
+    environment:
+      AEROVIEW_DATA: /data
+      PROCESS_TIMEOUT_SECONDS: "3600"
+    volumes: ["survey-data:/data"]
+    restart: unless-stopped
+    mem_limit: 3g
+    cpus: 2
+    network_mode: none
+volumes:
+  survey-data:
